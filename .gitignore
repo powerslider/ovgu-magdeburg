@@ -1,3 +1,7 @@
+# CLion files
+*.iml
+.idea
+
 # Compiled Object files
 *.slo
 *.lo
