@@ -1,9 +1,9 @@
 %% @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
 %% @doc Functions calculating velocities achieved by objects
-%% dropped in a vacuum.
+%%      dropped in a vacuum.
 
 -module(drop).
--export([fall_velocity/1]).
+-export([fall_velocity/1, falls/1]).
 
 %% accepts a tuple as a parameter and extracts its contents
 fall_velocity(Where) -> 
@@ -41,3 +41,16 @@ fall_velocity(Planemo, Distance) when Distance >= 0 ->
 
     %% return tuple with velocity and description
     Description.
+
+%% calculate fall velocity of a list of distances
+%% NOTE: Reads list from beginning to the end.
+falls(List) ->
+    falls(List, []).
+
+%% creates results list from end to beginning so we have
+%% to reverse it after it is calculated
+falls([], Results) -> 
+    lists:reverse(Results);
+
+falls([Head | Tail], Results) ->
+    falls(Tail, [fall_velocity(Head) | Results]).
