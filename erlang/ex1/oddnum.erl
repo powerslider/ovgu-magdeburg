@@ -1,5 +1,5 @@
 %% @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
-%% @doc Function to remove duplicates in a list
+%% @doc Function to remove odd numbers in a list
 
 -module(oddnum).
 -export([remove_odd/1, remove_odd_comp/1]).
