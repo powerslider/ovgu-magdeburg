@@ -5,6 +5,7 @@
 -export([fib/1, fib_tail/1]).
 
 % standard recursion (very slow!)
+% exponential complexity regarding N
 fib(1) -> 0;
 
 fib(2) -> 1;
