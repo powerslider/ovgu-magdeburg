@@ -25,7 +25,10 @@ splitIBAN(String) ->
 
 % defines algorithm for IBAN validation,
 % takes the an IBAN triple as parameter
-validateIBAN(IBANTuple) -> 
+validateIBAN(IBANString) -> 
+    % split IBAN to a triple
+    IBANTuple = splitIBAN(IBANString),
+    
     % get country code as first element of the tuple
     CountryCode = element(1, IBANTuple),
     % convert it to ascii check digits
@@ -34,7 +37,7 @@ validateIBAN(IBANTuple) ->
     % get checksum as second element of the tuple 
     Checksum = element(2, IBANTuple),
 
-    % get BBan as third element of the tuple
+    % get BBAN as third element of the tuple
     BBAN = element(3, IBANTuple),
 
     % rearrange the IBAN components in the order:
