@@ -3,7 +3,7 @@
 %% @see http://en.wikipedia.org/wiki/International_Bank_Account_Number#Validating_the_IBAN
 
 -module(iban).
--export([splitIBAN/1, validateIBAN/1]).
+-export([splitIBAN/1, validateIBAN/1, checksumIBAN/2]).
 
 % function for splitting an IBAN into:
 % - country code (e. "DE")
@@ -23,8 +23,7 @@ splitIBAN(String) ->
                [{capture, all_but_first, list}]),
     { CountryCode, Checksum, BBAN }.
 
-% defines algorithm for IBAN validation,
-% takes the an IBAN triple as parameter
+% defines algorithm for IBAN validation
 validateIBAN(IBANString) -> 
     % split IBAN to a triple
     IBANTuple = splitIBAN(IBANString),
@@ -48,6 +47,25 @@ validateIBAN(IBANString) ->
     % convert to integer and calculate rest
     % { check_digits mod 97 } should yield 1
     list_to_integer(IBANCheckDigits) rem 97 == 1.
+
+% defines algorithm for checksum calculation
+checksumIBAN(BankCode, AccountNumber) -> 
+
+    PaddedAccountNumber = string:right(AccountNumber, 10, $0),
+    CountryCodeCheckDigits = asciiIBAN("DE"),
+
+    % rearrange the IBAN components in the order:
+    % - ASCII "DE", bank code, account number, "00"
+    % and concatenate them
+    IBANCheckDigits = BankCode ++ PaddedAccountNumber ++ CountryCodeCheckDigits ++ "00",
+
+    % convert to integer and calculate rest
+    % { check_digits mod 97 } should yield 1
+    Rest = list_to_integer(IBANCheckDigits) rem 97,
+
+    % calculate checksum
+    98 - Rest.
+
 
 % convert country code to (ASCII codes - 55).
 % Example: A -> 10, B -> 11 ...
