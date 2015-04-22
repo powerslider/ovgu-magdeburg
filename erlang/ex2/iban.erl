@@ -28,7 +28,7 @@ splitIBAN(String) ->
 validateIBAN(IBANString) -> 
     % split IBAN to a triple
     IBANTuple = splitIBAN(IBANString),
-    
+
     % get country code as first element of the tuple
     CountryCode = element(1, IBANTuple),
     % convert it to ascii check digits
@@ -47,7 +47,7 @@ validateIBAN(IBANString) ->
 
     % convert to integer and calculate rest
     % { check_digits mod 97 } should yield 1
-    list_to_integer(IBANCheckDigits) rem 97.
+    list_to_integer(IBANCheckDigits) rem 97 == 1.
 
 % convert country code to (ASCII codes - 55).
 % Example: A -> 10, B -> 11 ...
