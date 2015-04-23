@@ -4,11 +4,12 @@
 -module(pyTriple).
 -export([pyTriple/1]).
 
-% check if 
+% get all possible Pythagorean triples
 pyTriple(N) -> [{X, Y, Z} ||
                 X <- take(N, ints_from(2)),
                 Y <- take(N, ints_from(X + 1)),
                 Z <- take(N, ints_from(Y + 1)),
+
                 X * X + Y * Y == Z * Z].
 
 

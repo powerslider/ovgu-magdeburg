@@ -60,11 +60,10 @@ checksumIBAN(BankCode, AccountNumber) ->
     IBANCheckDigits = BankCode ++ PaddedAccountNumber ++ CountryCodeCheckDigits ++ "00",
 
     % convert to integer and calculate rest
-    % { check_digits mod 97 } should yield 1
     Rest = list_to_integer(IBANCheckDigits) rem 97,
 
     % calculate checksum
-    98 - Rest.
+    string:right(integer_to_list(98 - Rest), 2, $0).
 
 
 % convert country code to (ASCII codes - 55).
