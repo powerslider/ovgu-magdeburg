@@ -1,5 +1,5 @@
 %% @author Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
-%% @doc Alternating order of two lazy lists as pairs from entries of
+%% @doc Alternating order of two lazy lists as pairs of entries from
 %%      both lists.
 
 -module(alternate).
