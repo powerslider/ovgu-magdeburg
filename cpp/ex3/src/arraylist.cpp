@@ -5,7 +5,7 @@
  *
  * @class   Timer
  * @brief   Implementation of Timer class methods.
- * @details Implementation of Timer class operations such as start, stop, pause...
+ * @details Implementation of Timer class operations such as start, stop, pause, resume...
  *          Uses c++11 chrono library for the timestamps.
  */
 #include "arraylist.h"
