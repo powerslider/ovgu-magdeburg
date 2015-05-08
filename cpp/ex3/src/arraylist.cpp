@@ -71,7 +71,7 @@ bool ArrayList<T>::addFront(const T &item)
 template <typename T>
 bool ArrayList<T>::destroy(unsigned int position)
 {
-    memmove(&this->arr[position + 1], &this->arr[position],  sizeof(this->arr) - sizeof(this->arr[position]));
+    memmove(&this->arr[position + 1], &this->arr[position],  sizeof(this->arr[capacity]) - sizeof(this->arr[position]));
     return true;
 }
 
