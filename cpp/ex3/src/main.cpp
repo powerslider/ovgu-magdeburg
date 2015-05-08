@@ -10,10 +10,6 @@
 #include "arraylist.cpp"
 
 
-void show(ArrayList<int> *list);
-
-void addBack(ArrayList<int> *list);
-
 using namespace std;
 
 
