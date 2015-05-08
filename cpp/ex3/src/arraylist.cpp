@@ -1,88 +1,82 @@
 /**
- * @file    timer.cpp
+ * @file    arraylist.cpp
  * @author  Tsvetan Dimitrov <tsvetan.dimitrov23@gmail.com>
- * @date    2015-04-15
+ * @date    2015-05-03
  *
- * @class   Timer
- * @brief   Implementation of Timer class methods.
- * @details Implementation of Timer class operations such as start, stop, pause...
- *          Uses c++11 chrono library for the timestamps.
+ * @class   ArrayList
+ * @brief   Implementation of ArrayList class methods.
+ * @details Implementation of ArrayList class operations such as add, remove, indexOf...
  */
 #include "arraylist.h"
 #include <iostream>
+#include <string.h>
 
-using namespace std;
 
-ArrayList::ArrayList()
+template <typename T>
+ArrayList<T>::ArrayList(size_t capacity)
 {
-   started = false;
-   paused = false;
+    this->capacity = capacity;
+    this->arr = new T[capacity];
 }
 
-void ArrayList::start()
+template <typename T>
+ArrayList<T>::~ArrayList()
 {
-    if (started) return;
-
-    started = true;
-    paused = false;
-    startTime = Time::now();
+    delete[] this->arr;
+    this->capacity = 0;
+    this->count = 0;
+    this->arr = nullptr;
 }
 
-void ArrayList::stop()
+template <typename T>
+void ArrayList<T>::reserve(size_t capacity)
 {
-    started = false;
-}
-
-void ArrayList::pause()
-{
-    if (paused || !started)
+    if (this->capacity == capacity)
     {
-        cout << "ArrayList is not running!" << endl;
-        return;
+        T* tempArr = new T[capacity];
+        std::copy(&this->arr[0], &this->arr[count - 1], &tempArr[0]);
+
+        this->arr = tempArr;
+        this->count = 0;
+        this->capacity = sizeof(this->arr) / sizeof(this->arr[0]);
     }
 
-    paused = true;
-    endTime = Time::now();
 }
 
-void ArrayList::resume()
+template <typename T>
+bool ArrayList<T>::addBack(const T &item)
 {
-    if (!paused)
+    this->arr[count] = item;
+    this->count++;
+    if (this->capacity == this->count)
     {
-        cout << "ArrayList is already running!" << endl;
-        return;
+        reserve(this->capacity / 2);
     }
-
-    paused = false;
-    startTime += (Time::now() - endTime);
+    return true;
 }
 
-ArrayList &ArrayList::getDuration()
+template <typename T>
+bool ArrayList<T>::addFront(const T &item)
 {
-    //if (!started) return *this;
-
-    if (paused)
+    memmove(&this->arr[1], &this->arr[0], sizeof(this->arr[capacity]) - sizeof(this->arr[0]));
+    this->arr[0] = item;
+    this->count++;
+    if (this->capacity == this->count)
     {
-        duration = endTime - startTime;
+        reserve(this->capacity / 2);
     }
-
-    duration = Time::now() - startTime;
-
-    return *this;
+    return true;
 }
 
-float ArrayList::toMicros()
+template <typename T>
+bool ArrayList<T>::destroy(unsigned int position)
 {
-    return chrono::duration_cast<chrono::microseconds>(duration).count();
+    memmove(&this->arr[position + 1], &this->arr[position],  sizeof(this->arr) - sizeof(this->arr[position]));
+    return true;
 }
 
-float ArrayList::toMillis()
+template <typename T>
+T* ArrayList<T>::getAt(unsigned int position)
 {
-    return chrono::duration_cast<chrono::milliseconds>(duration).count();
+    return &this->arr[position];
 }
-
-float ArrayList::toNanos()
-{
-    return chrono::duration_cast<chrono::nanoseconds>(duration).count();
-}
-

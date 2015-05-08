@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 #Project name
-project (timer)
+project (arraylist)
 
 #Check support of the compiler for c++11.
 #Various compiler versions of gcc and clang use different flags to specify C++11 support,
@@ -24,4 +24,4 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 include_directories(include)
 
 #Generate executable
-add_executable(timer src/arraylist.cpp src/main.cpp)
+add_executable(arraylist src/arraylist.cpp src/main.cpp)
