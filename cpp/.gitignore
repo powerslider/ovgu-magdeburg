@@ -2,6 +2,15 @@
 *.iml
 .idea
 
+# Build folder
+bin
+
+# Auto-generated files and folders from CMake
+CMakeCache.txt 
+cmake_install.cmake
+CMakeFiles
+
+
 # Compiled Object files
 *.slo
 *.lo
