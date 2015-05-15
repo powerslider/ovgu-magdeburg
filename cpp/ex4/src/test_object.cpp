@@ -45,7 +45,8 @@ void TestObject::generateStrings()
 
 void TestObject::swapStrings(std::string& first, std::string& second)
 {
-    std::string temp = first;
+    //Assignment copies the address of first
+    std::string& temp = first;
     first = second;
     second = temp;
 }

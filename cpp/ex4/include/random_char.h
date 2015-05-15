@@ -11,12 +11,9 @@ public:
     RandomChar();
     ~RandomChar();
 
-    static char const getRandomChar()
-    {
-        return аllPossibleChars[rand() % length];
-    }
+    static char const getRandomChar();
 
 private:
-    static int const length;
-    static char const аllPossibleChars[];
+    static int const m_length;
+    static char const m_allPossibleChars[];
 };

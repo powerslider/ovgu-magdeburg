@@ -16,9 +16,9 @@
 // Should return the reference to a sum of two ints
 // TODO: rewrite this as a template (without the bug)
 template<typename T>
-T sumTheElements(const T& a, const T& b)
+T& sumTheElements(const T& a, const T& b)
 {
-    const T& result = a + b;
+    static T result = a + b;
     return result;
 }
 
@@ -28,6 +28,7 @@ int main()
     srand((unsigned int) time(nullptr)); //initialize random seed based on time
 
     // Where will this object live? Is this a good choice? Why or why not?
+    // Object allocated on the stack. Good for small objects, but not for big ones.
     TestObject anObject = TestObject(30);
 
     // Name differences between pointers and references:
@@ -60,7 +61,7 @@ int main()
 
     std::cout << std::endl << "total number of strings:" << std::endl;
    
-    int totalElementNumber = sumTheElements(referenceToAnObject.elementCount(), referenceToAnotherObject.elementCount());
+    int& totalElementNumber = sumTheElements(referenceToAnObject.elementCount(), referenceToAnotherObject.elementCount());
     std::cout << totalElementNumber << std::endl;
     std::cout << "Do calculations in another scope and display the same value again inside that scope: " << std::endl; 
     { 
