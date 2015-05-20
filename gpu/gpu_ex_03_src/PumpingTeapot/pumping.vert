@@ -8,7 +8,7 @@ void main() {
 	normal = normalize(normal);
 
 	// TODO: Pumping-Teapot Formel einfügen.
-	gl_Position += 0.25 * abs(sin(0.125 * pumpTime)) * vec4(normal, 0.0);
+	gl_Position.xyz += 0.25 * abs(sin(0.125 * pumpTime)) * normal;
 
 	vec4 outColor = gl_FrontMaterial.emission
 				+ gl_FrontMaterial.ambient * gl_LightModel.ambient

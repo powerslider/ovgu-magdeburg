@@ -153,8 +153,9 @@ void initGLSL()
 
 	// TODO: Use program.	
 	glUseProgram(shaderProgramPumping);
+	glUseProgram(0);
 	// TODO: Teilaufgabe 3... Die Uniform Location der Zeit-Variable bestimmen.	
-	uniformTime = glGetUniformLocation(vertexShaderPumping, "pumpTime");
+	uniformTime = glGetUniformLocation(shaderProgramPumping, "pumpTime");
 }
 
 void keyboard(unsigned char key, int x, int y)
@@ -195,7 +196,7 @@ void display()
 	alpha += 1;
 
 	// TODO: Inkrementieren des Zeit Parameters.
-	timeValue += 0.1;
+	timeValue++;
 
 	// Swap display buffers
 	glutSwapBuffers();

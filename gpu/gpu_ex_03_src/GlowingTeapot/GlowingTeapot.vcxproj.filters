@@ -20,6 +20,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="blur.frag">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="blur.vert">
       <Filter>Resource Files</Filter>
     </None>

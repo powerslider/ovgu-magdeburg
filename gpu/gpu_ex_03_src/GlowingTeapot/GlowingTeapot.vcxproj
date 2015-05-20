@@ -81,6 +81,7 @@
     <ClCompile Include="GlowingTeapot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="blur.frag" />
     <None Include="blur.vert" />
     <None Include="blur_hor.frag" />
     <None Include="blur_vert.frag" />
