@@ -40,8 +40,8 @@ void keyboard(unsigned char key, int x, int y)
 	// TODO: Bei Taste 1 Additive Alpha-Blending setzen.
 	if (key == '1')
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		glColor3f(1, 0, 0);
 		drawQuad(1, 1, -2);
@@ -60,8 +60,8 @@ void keyboard(unsigned char key, int x, int y)
 	// TODO: Bei Taste 2 
 	if (key == '2')
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
 		
 		glColor4f(1, 0, 0, 0.7);
 		drawQuad(1, 1, -2);
@@ -80,9 +80,10 @@ void keyboard(unsigned char key, int x, int y)
 	// TODO: Bei Taste 3 Texturekoordinaten mit Hilfe des Matrix-Stacks um den Faktor 2 skalieren.
 	if (key == '3')
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(1, 1, 1, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
 		
+		glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
 		glColor3f(1, 1, 0);
 		drawQuad(1, 1, -2);
 
@@ -91,7 +92,6 @@ void keyboard(unsigned char key, int x, int y)
 
 		glColor3f(1, 0, 1);
 		drawQuad(0.5, 0.25, 0);
-		glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
 		
 		glFlush();
 	}
