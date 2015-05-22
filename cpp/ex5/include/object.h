@@ -1,5 +1,8 @@
 #pragma once
+
 #include <iostream>
+#include <string.h>
+
 /// This object class serves basically as dummy for an "any object".
 /// Later on we will learn different possibilities how we actually could store "anything" in here.
 class Object
@@ -15,16 +18,24 @@ public:
   const char* GetType() const { return "Const object"; };
   const char* GetType() { return "not const"; };
   /// Implementiert den angegebenen und die verwandten Operatoren
-  bool operator==(Object& o)
+
+  Object& operator += (Object& obj);
+  inline bool operator < (const Object& rhs)
   {
-	  return false;
+      return strcmp(this->m_name, rhs.m_name) < 0;
   }
-  Object& operator+=(Object& obj);
-  bool operator<(Object const& obj);
-  bool operator>(Object const& obj);
+
+  inline bool operator > (const Object &rhs)
+  {
+      return strcmp(this->m_name, rhs.m_name) > 0;
+  }
+
+  inline bool operator == (const Object& rhs)
+  {
+      return (bool) strcmp(this->m_name, rhs.m_name);
+  }
 
 private:
-
   char* m_name;
 
   // Here could be YOUR data!
@@ -33,3 +44,4 @@ private:
 std::ostream& operator<< (std::ostream& stream, const Object&);
 
 // implement < and > for dynamicobjectlist.sort()
+

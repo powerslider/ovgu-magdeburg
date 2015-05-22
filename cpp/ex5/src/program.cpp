@@ -15,7 +15,7 @@
 
 
 #include <iostream>
-#include "dynamicobjectlist.hpp"
+#include "dynamicobjectlist.h"
 #include "object.h"
 #include <string.h>
 
@@ -56,7 +56,7 @@ int main()
 
   std::cout << "merging lists\n";
   const DynamicObjectList list3(list2);
-  list1 |= list3;
+  //list1 |= list3;
 
   std::cout << "List list1 has " << list1.getCount() << (list1.getCount() != 7 ? "members. SHOULD BE 7" : "members. CORRECT") << std::endl;
   std::cout << "Object at 3 is" << list1[3] << (strcmp(list1[3].GetName(),"w")  ? ". SHOULD BE w" : ". CORRECT") << std::endl;
@@ -100,7 +100,7 @@ int main()
 	  l1 += *new Object(std::to_string(i).c_str());
   }
   std::cout << "li&=l2"<<std::endl;
-  l1 &= l2;
+  //l1 &= l2;
   std::cout << "List l1 has size " << l1.getCapacity() << (l1.getCapacity() > 30 ? ". SHOULD BE <=30" : ". CORRECT") << std::endl;
   std::cout << "List l1 has " << l1.getCount() << (l1.getCount() > 5 ? "members. SHOULD BE 5" : "members. CORRECT") << std::endl;
   std::cout << std::endl << "Current content of list 1:" << std::endl;

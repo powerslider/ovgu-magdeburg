@@ -1,4 +1,4 @@
-#include "dynamicobjectlist.hpp"
+#include "dynamicobjectlist.h"
 #include "object.h"
 
 DynamicObjectList::DynamicObjectList()
@@ -71,7 +71,7 @@ void DynamicObjectList::sort()
 	{
 		unsigned int i = 0;
 		Object* tmp = m_list[j];
-		for (i = j - 1; (i >= 0) && (*m_list[i] < *tmp); i--)   // Smaller values move up
+		for (i = j - 1; (i >= 0) && (*m_list[i] > *tmp); i--)   // Smaller values move up
 		{
 			m_list[i + 1] = m_list[i];
 		}
@@ -145,10 +145,16 @@ Object* DynamicObjectList::getAt(unsigned int position)
 	return m_list[position];
 }
 
-/* todo*/
+
 Object* DynamicObjectList::getAt(const unsigned int position) const
 {
-    return nullptr;
+    // Does the element exist?
+    if (m_count <= position)
+    {
+        return nullptr;
+    }
+
+    return m_list[position];
 }
 
 
@@ -158,7 +164,7 @@ void DynamicObjectList::shrink()
 
     if (m_capacity >= 2 * m_count && newCapacity < 5 * m_count)
     {
-      reserve(newCapacity);
+        reserve(newCapacity);
     }
 }
 
@@ -168,13 +174,15 @@ void DynamicObjectList::shrink()
 DynamicObjectList& DynamicObjectList::operator=(const DynamicObjectList &otherList)
 {
     delete[] m_list;
-
+    m_count = otherList.m_count;
     m_capacity = otherList.m_capacity;
     m_list = new Object*[m_capacity];
     for (int i = 0; i < m_capacity; ++i)
     {
         m_list[i] = otherList.m_list[i];
     }
+
+    return *this;
 }
 
 DynamicObjectList& DynamicObjectList::operator+=(Object const &aConst)
@@ -201,12 +209,12 @@ DynamicObjectList& DynamicObjectList::operator+=(Object &object)
 //  return <#initializer#>;
 //}
 
-Object& DynamicObjectList::operator[](unsigned int const i) const
+const Object& DynamicObjectList::operator[](unsigned int const i) const
 {
     return *getAt(i);
 }
 
-//Object& DynamicObjectList::operator[](unsigned int const i)
-//{
-//  return <#initializer#>;
-//}
+Object& DynamicObjectList::operator[](unsigned int const i)
+{
+    return *getAt(i);
+}

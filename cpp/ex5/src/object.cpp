@@ -1,8 +1,8 @@
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
+
 #include "object.h"
-#include <string.h>
 
 Object::Object(const char* name)
 {
@@ -28,14 +28,7 @@ std::ostream& operator<< (std::ostream& stream, const Object& o)
 	return stream;
 }
 
-//Object &Object::operator+=(Object &o)
+//Object& Object::operator+=(Object &obj)
 //{
 //	return <#initializer#>;
 //}
-bool Object::operator<(Object const& obj) {
-	return (*this->m_name) < (*obj.m_name);
-}
-
-bool Object::operator>(Object const &obj) {
-	return (*this->m_name) > (*obj.m_name);
-}
