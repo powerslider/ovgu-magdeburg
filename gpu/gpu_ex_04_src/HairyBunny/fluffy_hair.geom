@@ -1,0 +1,42 @@
+// geometry shader for growing hair
+
+#version 150
+
+#define OUT_VERTS 6
+
+layout(triangles) in;
+layout(line_strip, max_vertices = OUT_VERTS) out;
+
+in vec3 normal[3];
+
+float grav = 0.001f;
+
+layout(std140) uniform GlobalMatrices
+{
+	mat4 Projection;
+	mat4 View;
+};
+
+void main(void)
+{
+	//Pass-thru!
+	gl_Position = vec4(0);
+	for(int i=0; i< gl_in.length(); i++){
+		vec4 currentPosition = gl_in[i].gl_Position;
+		gl_Position = Projection * View * gl_Position;
+		EmitVertex();
+		for(int j = 1; j < OUT_VERTS; j++){
+			
+			currentPosition += (vec4(normal[i] * 0.125, 0) / OUT_VERTS);
+			
+			//substract gravity from y axis
+			currentPosition.y -= j * grav;
+			
+			// transform to eye coordinates
+			gl_Position = Projection * View * currentPosition;
+			EmitVertex();
+		}
+		EndPrimitive();
+	}
+	EndPrimitive();
+}
