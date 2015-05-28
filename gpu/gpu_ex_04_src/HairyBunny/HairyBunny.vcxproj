@@ -82,6 +82,7 @@
     <ClCompile Include="HairyBunny.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fluffy_hair.frag" />
     <None Include="fluffy_hair.geom" />
     <None Include="hair.frag" />
     <None Include="duplicate.geom" />

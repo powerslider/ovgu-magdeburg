@@ -44,5 +44,8 @@
     <None Include="duplicate.geom">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="fluffy_hair.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

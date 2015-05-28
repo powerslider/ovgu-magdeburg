@@ -364,6 +364,7 @@ void initGLSL()
 {
 	GLuint vertexShaderHair = loadShader(GL_VERTEX_SHADER, "hair.vert");
 	GLuint fragmentShaderHair = loadShader(GL_FRAGMENT_SHADER, "hair.frag");
+	GLuint fragmentShaderFluffyHair = loadShader(GL_FRAGMENT_SHADER, "fluffy_hair.frag");
 
 	GLuint vertexShaderSimple = loadShader(GL_VERTEX_SHADER, "simple.vert");
 	GLuint fragmentShaderSimple = loadShader(GL_FRAGMENT_SHADER, "simple.frag");
@@ -407,13 +408,13 @@ void initGLSL()
 
 	// Attach shader
 	glAttachShader(progFluffyHair, vertexShaderHair);
-	glAttachShader(progFluffyHair, fragmentShaderHair);
+	glAttachShader(progFluffyHair, fragmentShaderFluffyHair);
 	glAttachShader(progFluffyHair, geometryShaderFluffyHair);
 
 	// Link program
 	cout << "Linking: progFluffyHair" << endl;
-	glLinkProgram(progNormalHair);
-	printProgramInfoLog(progNormalHair);
+	glLinkProgram(progFluffyHair);
+	printProgramInfoLog(progFluffyHair);
 
 	// *********************************************************************
 
