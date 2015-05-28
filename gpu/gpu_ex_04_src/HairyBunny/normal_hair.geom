@@ -22,26 +22,22 @@ void main(void)
 {
 	//Pass-thru!
 	gl_Position = vec4(0);
-	for(int i=0; i < gl_in.length(); i++) {
-
-		vec4 currentPosition = gl_in[i].gl_Position;
-		vec4 currentNormal = vec4(normal[i] * NORMAL_LENGTH, 0);
+	vec4 currentPosition = gl_in[0].gl_Position;
+	vec4 currentNormal = vec4(normal[0] * NORMAL_LENGTH, 0);
 				
-		gl_Position = Projection * View * gl_Position;
+	gl_Position = Projection * View * gl_Position;
 		
+	EmitVertex();
+		
+	for(int j = 1; j < OUT_VERTS; j++){
+		currentPosition += currentNormal / OUT_VERTS;
+			
+		//add gravity to y axis
+		currentPosition.y -= j * grav;
+			
+		// transform to eye coordinates
+		gl_Position = Projection * View * currentPosition;
 		EmitVertex();
-		
-		for(int j = 1; j < OUT_VERTS; j++){
-			currentPosition += currentNormal / OUT_VERTS;
-			
-			//add gravity to y axis
-			currentPosition.y -= j * grav;
-			
-			// transform to eye coordinates
-			gl_Position = Projection * View * currentPosition;
-			EmitVertex();
-		}
-		EndPrimitive();
 	}
 	EndPrimitive();
 }

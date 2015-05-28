@@ -14,8 +14,8 @@ out vec3 geomNormalInEyeSpace;
 out vec3 geomPositionInEyeSpace;
 
 const float grav = 0.005f;
-const float displacementFactor = 0.0125*4;
-const float displacementFactorStep = displacementFactor/((OUT_VERTS/2)-1);
+const float displacementFactor = 0.0125 * 4;
+const float displacementFactorStep = displacementFactor / ((OUT_VERTS / 2)-1);
 
 layout(std140) uniform GlobalMatrices
 {
@@ -44,42 +44,30 @@ void placeTwoPoints(vec4 position,vec3 displacementVector, float displacementFac
 
 void main(void)
 {
-	vec4 position = vec4(0);
-	vec4 positionStep = vec4(0);
-	vec3 displacementVector = vec3(0);
-	vec3 growthVector = vec3(0);
 	originatingVertex = gl_in[0].gl_Position.xyz;
+			
+	vec4 position= gl_in[0].gl_Position;
+	vec4 positionStep = (vec4(normal[0] * 0.1, 0)) / (OUT_VERTS / 2);		
+	vec3 displacementVector = (View * vec4(1.0f,0.0f,0.0f,0.0f)).xyz;
+	normalize(displacementVector);
+	geomNormalInEyeSpace = (View * vec4(geomNormalInEyeSpace, 0.0f)).xyz;		
 
-	for(int i=0; i< gl_in.length(); i++){
-		// vertex
-		originatingVertex = gl_in[i].gl_Position.xyz;
-				
-		position= gl_in[i].gl_Position;
-		growthVector = normal[i];
-		//growthVector = (inverse(View)*vec4(0.0f,-1.0f,1.0f,0.0f)).xyz;
-		positionStep = (vec4(growthVector*0.1,0))/(OUT_VERTS/2);		
-		//displacementVector = cross(normal[i],vec3(0,0,1));
-		displacementVector = (inverse(View)*vec4(1.0f,0.0f,0.0f,0.0f)).xyz;
-		normalize(displacementVector);
-		geomNormalInEyeSpace = (View*vec4(geomNormalInEyeSpace,0.0f)).xyz;		
-
-		placeTwoPoints(position,displacementVector,displacementFactor);
+	placeTwoPoints(position, displacementVector, displacementFactor);
 		
-		vec3 oldPosition;
-		for(int j=1; j< OUT_VERTS/2; j++){
-			oldPosition = position.xyz;
+	vec3 oldPosition;
+	for(int j = 1; j < OUT_VERTS/2; j++){
+		oldPosition = position.xyz;
 			
-			// calculate new position			
-			position = position + positionStep;
-			position.y -= j * grav;
+		// calculate new position			
+		position += positionStep;
+		position.y -= j * grav;
 			
-			// calculate normals for lighting
-			geomNormalInEyeSpace = cross(displacementVector,normalize(position.xyz - oldPosition));
-			normalize(geomNormalInEyeSpace);
-			geomNormalInEyeSpace = (View*vec4(geomNormalInEyeSpace,0.0f)).xyz;
+		// calculate normals for lighting
+		geomNormalInEyeSpace = cross(displacementVector, normalize(position.xyz - oldPosition));
+		normalize(geomNormalInEyeSpace);
+		geomNormalInEyeSpace = (View * vec4(geomNormalInEyeSpace, 0.0f)).xyz;
 
-			placeTwoPoints(position,displacementVector,displacementFactor-(displacementFactorStep*j));
-		}
-		EndPrimitive();
+		placeTwoPoints(position, displacementVector, displacementFactor - (displacementFactorStep * j));
 	}
+	EndPrimitive();
 }
