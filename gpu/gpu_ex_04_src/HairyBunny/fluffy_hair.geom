@@ -2,14 +2,20 @@
 
 #version 150
 
-#define OUT_VERTS 6
+#define OUT_VERTS 12
 
 layout(triangles) in;
-layout(line_strip, max_vertices = OUT_VERTS) out;
+layout(triangle_strip, max_vertices = OUT_VERTS) out;
 
 in vec3 normal[3];
 
-float grav = 0.001f;
+flat out vec3 originatingVertex;
+out vec3 geomNormalInEyeSpace;
+out vec3 geomPositionInEyeSpace;
+
+const float grav = 0.005f;
+const float displacementFactor = 0.0125 * 4;
+const float displacementFactorStep = displacementFactor / ((OUT_VERTS / 2)-1);
 
 layout(std140) uniform GlobalMatrices
 {
@@ -17,26 +23,51 @@ layout(std140) uniform GlobalMatrices
 	mat4 View;
 };
 
+void transformAndEmitVertex()
+{
+	vec4 geomPositionInEyeSpace4 = View * gl_Position;	
+	geomPositionInEyeSpace = geomPositionInEyeSpace.xyz;
+	gl_Position = Projection * geomPositionInEyeSpace4;
+	EmitVertex();
+}
+
+void placeTwoPoints(vec4 position,vec3 displacementVector, float displacementFactor)
+{
+	gl_Position = position;
+	gl_Position -= vec4(displacementVector * displacementFactor,0);
+	transformAndEmitVertex();
+
+	gl_Position = position;
+	gl_Position += vec4(displacementVector * displacementFactor,0);
+	transformAndEmitVertex();
+}
+
 void main(void)
 {
-	//Pass-thru!
-	gl_Position = vec4(0);
-	for(int i=0; i< gl_in.length(); i++){
-		vec4 currentPosition = gl_in[i].gl_Position;
-		gl_Position = Projection * View * gl_Position;
-		EmitVertex();
-		for(int j = 1; j < OUT_VERTS; j++){
+	originatingVertex = gl_in[0].gl_Position.xyz;
 			
-			currentPosition += (vec4(normal[i] * 0.125, 0) / OUT_VERTS);
+	vec4 position= gl_in[0].gl_Position;
+	vec4 positionStep = (vec4(normal[0] * 0.1, 0)) / (OUT_VERTS / 2);		
+	vec3 displacementVector = (View * vec4(1.0f,0.0f,0.0f,0.0f)).xyz;
+	normalize(displacementVector);
+	geomNormalInEyeSpace = (View * vec4(geomNormalInEyeSpace, 0.0f)).xyz;		
+
+	placeTwoPoints(position, displacementVector, displacementFactor);
+		
+	vec3 oldPosition;
+	for(int j = 1; j < OUT_VERTS/2; j++){
+		oldPosition = position.xyz;
 			
-			//substract gravity from y axis
-			currentPosition.y -= j * grav;
+		// calculate new position			
+		position += positionStep;
+		position.y -= j * grav;
 			
-			// transform to eye coordinates
-			gl_Position = Projection * View * currentPosition;
-			EmitVertex();
-		}
-		EndPrimitive();
+		// calculate normals for lighting
+		geomNormalInEyeSpace = cross(displacementVector, normalize(position.xyz - oldPosition));
+		normalize(geomNormalInEyeSpace);
+		geomNormalInEyeSpace = (View * vec4(geomNormalInEyeSpace, 0.0f)).xyz;
+
+		placeTwoPoints(position, displacementVector, displacementFactor - (displacementFactorStep * j));
 	}
 	EndPrimitive();
 }
