@@ -110,6 +110,24 @@ string readFile(string fileName)
 	return fileContent;
 }
 
+GLuint loadShader(GLenum shaderType, string shaderFileName)
+{
+	// Create empty shader object
+	GLuint shaderHandle = glCreateShader(shaderType);
+	// Read vertex shader source 
+	cout << "Loading: " + shaderFileName << endl;
+	string shaderSource = readFile(shaderFileName);
+	const char* sourcePtr = shaderSource.c_str();
+
+	// Attach shader code
+	glShaderSource(shaderHandle, 1, &sourcePtr, nullptr);
+	// Compile shader	
+	glCompileShader(shaderHandle);
+	printShaderInfoLog(shaderHandle);
+
+	return shaderHandle;
+}
+
 //------------------------------------------------------------------------
 // Rendering loop.
 //------------------------------------------------------------------------
@@ -155,7 +173,7 @@ void display(void)
 	
 	// In der ersten Iteration glDrawArrays verwenden, später den Feedback Draw Call nehmen.
 	if( bFirst ) {
-        glDrawArrays(GL_POINTS, 0, NUM_SEEDS*2);
+        glDrawArrays(GL_POINTS, 0, NUM_SEEDS * 2);
 	}
 	else {
 		// TODO: Den Transform Feedback Draw-Call nehmen, da dieser bereits weiß, wieviele Vertices sich derzeit im Stream befinden.
@@ -189,9 +207,9 @@ void display(void)
 	swap(feedback_readFrom, feedback_streamTo);
 
 	bFirst = false;
-
+	 
 	// Let the time progress.
-	time += stepSize / (box_max[2]-box_min[2]);
+	time += stepSize / (box_max[2] - box_min[2]);
 }
 
 
@@ -231,46 +249,51 @@ void initGL()
 void initGLSL()
 {
 	// Create empty shader object (vertex shader)
-	GLuint vertexShaderAdvect = glCreateShader(GL_VERTEX_SHADER);
+	GLuint vertexShaderAdvect = loadShader(GL_VERTEX_SHADER, "advect.vert");
+	//GLuint vertexShaderAdvect = glCreateShader(GL_VERTEX_SHADER);
 
-	// Read vertex shader source 
-	string shaderSource = readFile("advect.vert");
-	const char* sourcePtr = shaderSource.c_str();
+	//// Read vertex shader source 
+	//string shaderSource = readFile("advect.vert");
+	//const char* sourcePtr = shaderSource.c_str();
 
-	// Attach shader code
-	glShaderSource(vertexShaderAdvect, 1, &sourcePtr, NULL);	
+	//// Attach shader code
+	//glShaderSource(vertexShaderAdvect, 1, &sourcePtr, NULL);	
 
-	// Compile
-	glCompileShader(vertexShaderAdvect);
-	printShaderInfoLog(vertexShaderAdvect);
+	//// Compile
+	//glCompileShader(vertexShaderAdvect);
+	//printShaderInfoLog(vertexShaderAdvect);
 
 	// Create empty shader object (geometry shader)
-	GLuint geometryShaderAdvect = glCreateShader(GL_GEOMETRY_SHADER);
+	GLuint geometryShaderAdvect = loadShader(GL_GEOMETRY_SHADER, "advect.geom");
 
-	// Read vertex shader source 
-	shaderSource = readFile("advect.geom");
-	sourcePtr = shaderSource.c_str();
+	//GLuint geometryShaderAdvect = glCreateShader(GL_GEOMETRY_SHADER);
 
-	// Attach shader code
-	glShaderSource(geometryShaderAdvect, 1, &sourcePtr, NULL);	
+	//// Read vertex shader source 
+	//shaderSource = readFile("advect.geom");
+	//sourcePtr = shaderSource.c_str();
 
-	// Compile
-	glCompileShader(geometryShaderAdvect);
-	printShaderInfoLog(geometryShaderAdvect);
+	//// Attach shader code
+	//glShaderSource(geometryShaderAdvect, 1, &sourcePtr, NULL);	
+
+	//// Compile
+	//glCompileShader(geometryShaderAdvect);
+	//printShaderInfoLog(geometryShaderAdvect);
 
 	// Create empty shader object (fragment shader)
-	GLuint fragmentShaderAdvect = glCreateShader(GL_FRAGMENT_SHADER);
+	GLuint fragmentShaderAdvect = loadShader(GL_FRAGMENT_SHADER, "advect.frag");
 
-	// Read vertex shader source 
-	shaderSource = readFile("advect.frag");
-	sourcePtr = shaderSource.c_str();
+	//GLuint fragmentShaderAdvect = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// Attach shader code
-	glShaderSource(fragmentShaderAdvect, 1, &sourcePtr, NULL);	
+	//// Read vertex shader source 
+	//shaderSource = readFile("advect.frag");
+	//sourcePtr = shaderSource.c_str();
 
-	// Compile
-	glCompileShader(fragmentShaderAdvect);
-	printShaderInfoLog(fragmentShaderAdvect);
+	//// Attach shader code
+	//glShaderSource(fragmentShaderAdvect, 1, &sourcePtr, NULL);	
+
+	//// Compile
+	//glCompileShader(fragmentShaderAdvect);
+	//printShaderInfoLog(fragmentShaderAdvect);
 
 	// Create shader program
 	progAdvect = glCreateProgram();	

@@ -37,7 +37,7 @@ void main()
 	// TODO: Projektion des Punktes p in die Tangentialebenen der Eckpunkte, wiederum baryzentrische Interpolation zwischen den projizierten Punkten ergibt Punkt q.
 	vec3 projectedPoints[3];
 	for (int i = 0; i < 3; ++i) {
-		projectedPoints[i] = p - dot((p - hs_out_Position[i]), hs_out_Normal[i]) * hs_out_Normal[i];
+		projectedPoints[i] = p - ((p - hs_out_Position[i]) * hs_out_Normal[i]) * hs_out_Normal[i];
 	}
 
 	vec3 q1 = gl_TessCoord.x * projectedPoints[0];

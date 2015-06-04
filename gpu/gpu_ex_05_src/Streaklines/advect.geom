@@ -110,7 +110,8 @@ void main(void)
 		vec2 successorPosition = vs_out[0].PositionB;
         if(!inGrid(successorPosition) || inObstacle(successorPosition))
         {
-            gs_out_State = TAIL;
+			uint gs_out_StateB = vs_out[0].StateB;
+			gs_out_StateB = TAIL;
         }
 		
 		// Emitieren des Partikels
@@ -126,9 +127,13 @@ void main(void)
 			distance(vs_out[0].PositionA, vs_out[0].PositionB) > refinementThreshold)
 		{
 			// TODO: Neues Body-Partikel in der Mitte (zwischen aktuellem und nachfolgendem Partikel) einfügen
-			gs_out_Position = 0.5f * vs_out[0].PositionA + 0.5 * vs_out[0].PositionB;
+			gs_out_Position = mix(vs_out[0].PositionB, gs_out_Position, 0.5);
 			gs_out_State = BODY;
 			gl_Position = Projection * vec4(gs_out_Position, 0, 1);
+
+			//gs_out_Position = 0.5f * (vs_out[0].PositionB - vs_out[0].PositionA);
+			//gs_out_State = BODY;
+			//gl_Position = Projection * vec4(gs_out_Position, 0, 1);
 			EmitVertex();
 			EndPrimitive();
 		}
