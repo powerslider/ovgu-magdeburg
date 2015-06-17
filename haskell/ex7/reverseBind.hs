@@ -1,0 +1,28 @@
+-- M1: f =<< return = f
+-- M2: return =<< f = f
+-- M3: h =<< (g =<< f) = (h =<< g) =<< f
+--
+-- Reverse Bind Operator (=<<)
+-- ==================================================================
+--      - arguments come in reverse order;
+--      - good for circumstances where >>= is used as a higher order 
+--        term;
+-- ==================================================================
+-- M1, M2
+-- ==================================================================
+-- "return" is an identity for the monadic function composition.
+-- In M1 it is left identity, in M2 it is right identity. At the end
+-- it just gives you f back.
+--
+-- For example:
+--      - 0 is an identity under the addition of integers;
+--      - 1 is an identity under multiplication of integers;
+-- In both cases when combined with a value using the appropriate 
+-- operation, it just gives you the value back.
+-- ==================================================================
+-- M3
+-- ==================================================================
+-- M3 tells us that monadic function composition is associative: when 
+-- we want to compose together three monadic functions (f, g, and h), 
+-- it doesn't matter which one we compose first.
+
