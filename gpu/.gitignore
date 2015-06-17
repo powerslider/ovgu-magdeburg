@@ -194,3 +194,11 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# CUDA stuff
+*.i
+*.ii
+*.gpu
+*.ptx
+*.cubin
+*.fatbin
