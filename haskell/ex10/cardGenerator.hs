@@ -1,7 +1,5 @@
 import Test.QuickCheck
---import Test.QuickCheck.Instances.Char
-import Data.Char
-import System.Random
+import Control.Monad
 
 data Card = Card Int String deriving (Eq, Show)
 
@@ -12,7 +10,8 @@ arbitraryVL = do int <- arbitrary
                  str <- arbitrary
                  return (Card int str)
 
---arbitraryA = error "not implemented"
+-- arbitraryA = frequency[(1, liftM Card arbitrary),
+--                       (1, liftM Card arbitrary)]
 
 arbitraryB = do digits <- rand7DigitNum
                 upper <- upperAlpha 1
