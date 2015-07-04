@@ -1,4 +1,3 @@
-
 newtype State s a = State {runState :: s -> (a,s)}
 
 instance Monad (State s) where  
