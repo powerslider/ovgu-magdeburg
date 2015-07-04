@@ -1,4 +1,4 @@
-import ParseFunc-tions
+import ParseFunctions
 
 
 spotWhile :: (a -> Bool) -> Parse a [a]
