@@ -26,3 +26,5 @@ include_directories(include)
 #Generate executable
 add_executable(exam2013_ex1 src/main_ex1.cpp)
 add_executable(exam2013_ex2 src/main_ex2.cpp)
+add_executable(exam2013_ex3 src/main_ex3.cpp)
+add_executable(exam2013_ex4 src/main_ex4.cpp)
