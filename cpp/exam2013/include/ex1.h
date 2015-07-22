@@ -1,3 +1,5 @@
+#pragma once
+
 class Wing;
 class Body;
 class Laser;

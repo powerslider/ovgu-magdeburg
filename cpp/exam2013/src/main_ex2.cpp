@@ -10,7 +10,7 @@ int main()
     Bird* bird = dynamic_cast<Bird*>(tux);
 
     //get pointer type for dynamic_cast<Fish*>(tux)
-    Fish *fish = dynamic_cast<Fish*>(tux);
+    Fish* fish = dynamic_cast<Fish*>(tux);
 
     Fish* nemo = new Fish;
     nemo->move();
