@@ -31,7 +31,6 @@ int main()
 
     //get type of &(&(leftWing)[0].ship->right)
     Wing** wing1 = &((&leftWing)[0].ship->right);
-
-
+    
     return 0;
 }

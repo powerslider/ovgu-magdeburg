@@ -24,4 +24,5 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 include_directories(include)
 
 #Generate executable
-add_executable(exam2013 src/main.cpp)
+add_executable(exam2013_ex1 src/main_ex1.cpp)
+add_executable(exam2013_ex2 src/main_ex2.cpp)
