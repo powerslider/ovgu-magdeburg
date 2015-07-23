@@ -5,15 +5,15 @@ class Laser;
 class SpaceShip
 {
 public:
-    SpaceShip(float startHealth, const Laser& laser)
-            : totalHealth(startHealth), health(startHealth), laser(laser)
-    {
-    }
-
     void applyDamage(float damage)
     {
         health -= damage;
         if (health <= 0) throw "BIG EXPLOSION";
+    }
+
+    SpaceShip(float startHealth, /*const*/ Laser& laser)
+            : totalHealth(startHealth), health(startHealth), laser(laser)
+    {
     }
 
     float getRelativeHealth() const
@@ -21,12 +21,12 @@ public:
         return health / totalHealth;
     }
 
-    const Laser& getLaser() const { return laser; }
+    Laser& getLaser() const { return laser; }
 
 private:
     const float totalHealth;
     float health;
-    const Laser& laser;
+    Laser& laser;
 };
 
 class Laser {

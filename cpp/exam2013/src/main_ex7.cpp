@@ -4,10 +4,16 @@
 int main()
 {
    Laser laser;
-   SpaceShip* ship = new SpaceShip(100, laser);
-   ship->applyDamage(25);
+   Laser enemyLaser;
 
-   std::cout << "HEALTH: " << ship->getRelativeHealth() << std::endl;
+   SpaceShip* ship = new SpaceShip(100, laser);
+   SpaceShip* enemyShip = new SpaceShip(100, enemyLaser);
+
+   ship->getLaser().shootLaser(*enemyShip);
+   enemyShip->getLaser().shootLaser(*ship);
+
+   std::cout << "SHIP HEALTH: " << ship->getRelativeHealth() << std::endl;
+   std::cout << "ENEMY SHIP HEALTH: " << enemyShip->getRelativeHealth() << std::endl;
 
    return 0;
 }
