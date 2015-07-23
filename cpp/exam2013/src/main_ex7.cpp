@@ -3,17 +3,31 @@
 
 int main()
 {
-   Laser laser;
-   Laser enemyLaser;
+   Laser laserStack;
+   Laser enemyLaserStack;
 
-   SpaceShip* ship = new SpaceShip(100, laser);
-   SpaceShip* enemyShip = new SpaceShip(100, enemyLaser);
+   SpaceShip shipStack(100, laserStack);
+   SpaceShip enemyShipStack(100, enemyLaserStack);
 
-   ship->getLaser().shootLaser(*enemyShip);
-   enemyShip->getLaser().shootLaser(*ship);
+   shipStack.getLaser().shootLaser(enemyShipStack);
+   enemyShipStack.getLaser().shootLaser(shipStack);
 
-   std::cout << "SHIP HEALTH: " << ship->getRelativeHealth() << std::endl;
-   std::cout << "ENEMY SHIP HEALTH: " << enemyShip->getRelativeHealth() << std::endl;
+   std::cout << "SHIP HEALTH [STACK]: " << shipStack.getRelativeHealth() << std::endl;
+   std::cout << "ENEMY SHIP HEALTH [STACK]: " << enemyShipStack.getRelativeHealth() << std::endl;
+
+   /**********************************************************************************************/
+
+   Laser* laserHeap = new Laser();
+   Laser* enemyLaserHeap = new Laser();
+
+   SpaceShip* shipHeap = new SpaceShip(100, *laserHeap);
+   SpaceShip* enemyShipHeap = new SpaceShip(100, *enemyLaserHeap);
+
+   shipHeap->getLaser().shootLaser(*enemyShipHeap);
+   enemyShipHeap->getLaser().shootLaser(*shipHeap);
+
+   std::cout << "SHIP HEALTH [HEAP]: " << shipHeap->getRelativeHealth() << std::endl;
+   std::cout << "ENEMY SHIP HEALTH [HEAP]: " << enemyShipHeap->getRelativeHealth() << std::endl;
 
    return 0;
 }

@@ -44,4 +44,4 @@ private:
     static const float DAMAGE_PER_SHOT;
 };
 
-const float Laser::DAMAGE_PER_SHOT = 90.01f;
+const float Laser::DAMAGE_PER_SHOT = 10.01f;
