@@ -3,8 +3,7 @@
 
 int main()
 {
-    Wing wing = Wing();
-    Wing& leftWing = wing;
+    Wing leftWing;
 
     //get laser of the right wing
     Laser& laser = leftWing.ship->right->laser;
