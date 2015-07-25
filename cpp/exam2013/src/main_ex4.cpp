@@ -1,3 +1,21 @@
+#include <iostream>
+
+
+char text[] = "ACDFHJLNPRSTVXZ";
+
+struct AA{
+    int i;
+    char *pT;
+    struct AA *pN;
+} arr[4] = {
+        { 1, text, arr + 1 },
+        { 2, text + 3, arr + 2 },
+        { 3, text + 6, arr + 3 },
+        { 4, text + 9, arr }
+};
+
+struct AA *pAA = arr;
+
 
 int main ()
 {
@@ -44,6 +62,19 @@ int main ()
     *++q = 6;                 //0x21
     *q++ = 7;                 //0x21
     q[0] = 8;                 //0x22
+
+    /******************************************/
+
+    int i;
+    for (i = 0 ; i < 3 ; i++) {
+        ++pAA;
+        pAA->pT++;
+        arr[i].pT[1] += 1;
+        std::cout << "line: "<< arr[i].pN->i << " "<< pAA->pN->pT << std::endl;
+    }
+
+//    char arr[] = "123456789";
+//    std::cout << arr + 1 << " " << arr + 2 << " " << arr + 3 << std::endl;
 
     return 0;
 }

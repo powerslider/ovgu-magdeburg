@@ -11,7 +11,7 @@ public:
         if (health <= 0) throw "BIG EXPLOSION";
     }
 
-    SpaceShip(float startHealth, /*const*/ Laser& laser)
+    SpaceShip(float startHealth, Laser& laser)
             : totalHealth(startHealth), health(startHealth), laser(laser)
     {
     }

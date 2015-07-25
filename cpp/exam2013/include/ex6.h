@@ -26,8 +26,8 @@ struct Cookie
     }
 };
 
-unique_ptr<Cookie[]> mix(const unique_ptr<Cookie>& box1, int num1,
-                         const unique_ptr<Cookie>& box2, int num2)
+unique_ptr<Cookie[]> mix(const shared_ptr<Cookie>& box1, int num1,
+                         const shared_ptr<Cookie>& box2, int num2)
 {
     unique_ptr<Cookie[]> kmix(new Cookie[num1 + num2]);
     for (int i = 0; i < num1; ++i)
@@ -50,8 +50,8 @@ bool nobodyEatsCookies(const unique_ptr<Cookie[]>& bowl)
 
 bool meeting()
 {
-    unique_ptr<Cookie> box1(new Cookie("Double Chocolate"));
-    unique_ptr<Cookie> box2(new Cookie("Acacookie"));
+    shared_ptr<Cookie> box1(new Cookie("Double Chocolate"));
+    shared_ptr<Cookie> box2(new Cookie("Acacookie"));
     unique_ptr<Cookie[]> bowl = mix(box1, 1, box2, 1);
 
     if(nobodyEatsCookies(bowl))

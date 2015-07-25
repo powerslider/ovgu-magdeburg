@@ -6,7 +6,7 @@
 class Animal
 {
 public:
-     ~Animal() { std::cout << "die" << std::endl; }
+    ~Animal() { std::cout << "die" << std::endl; }
     virtual void move() = 0;
 };
 

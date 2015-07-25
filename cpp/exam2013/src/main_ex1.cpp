@@ -15,10 +15,10 @@ int main()
     Body* spaceShipBody = &(leftWing.ship->body);
 
     //dereference pointer to body of spaceship
-    Body& spaceShipBodyDereferenced = *spaceShipBody;
+    Body spaceShipBodyDereferenced = *spaceShipBody;
 
     //get object of body of spaceship
-    Body spaceShipBodyObj = *(&spaceShipBodyDereferenced);
+    Body& spaceShipBodyObj = *(&spaceShipBodyDereferenced);
 
     // get type of &(leftWing.laser)
     Laser* laser1 = &(leftWing.laser);
@@ -30,6 +30,8 @@ int main()
 
     //get type of &(&(leftWing)[0].ship->right)
     Wing** wing1 = &((&leftWing)[0].ship->right);
+
+    Wing*** wing2 = &(wing1);
 
     return 0;
 }
